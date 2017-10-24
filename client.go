@@ -1,32 +1,109 @@
 package btctools
 
-import "sync/atomic"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"reflect"
+	"sync/atomic"
+)
 
+// ConnConfig describes the connection configuration parameters for the client
 type ConnConfig struct {
 	// Host is the IP address and port of the RPC server you want to connect to
 	Host string
 
-	// User is the username to use to authenticate to the RPC server.
+	// User is the username to use to authenticate to the RPC server
 	User string
-	// Pass is the password to use to authenticate to the RPC server.
+	// Pass is the password to use to authenticate to the RPC server
 	Pass string
 }
 
 type Client struct {
-	// config holds the connection configuration associated with this client.
+	// config holds the connection configuration associated with this client
 	config *ConnConfig
 
 	// id for next RPC request
 	id uint64
+
+	httpClient *http.Client
 }
 
 func (c *Client) nextID() uint64 {
 	return atomic.AddUint64(&c.id, 1)
 }
 
+type clientRequest struct {
+	Method string        `json:"method"`
+	Params []interface{} `json:"params"`
+	Id     uint64        `json:"id"`
+}
+
+func (c *Client) generateRequest(method string, params interface{}) ([]byte, error) {
+	req := clientRequest{
+		Method: method,
+		Id:     c.nextID(),
+	}
+
+	rt := reflect.ValueOf(params)
+	switch rt.Kind() {
+	case reflect.Slice:
+		req.Params = make([]interface{}, rt.Len())
+		for i := 0; i < rt.Len(); i += 1 {
+			req.Params[i] = rt.Index(i).Interface()
+		}
+	default:
+		if params != nil {
+			req.Params = []interface{}{params}
+		} else {
+			req.Params = []interface{}{}
+		}
+	}
+
+	return json.Marshal(req)
+}
+
+type clientResponse struct {
+	Id     uint64           `json:"id"`
+	Result *json.RawMessage `json:"result"`
+	Error  interface{}      `json:"error"`
+}
+
+func (c *Client) sendRequest(method string) (*json.RawMessage, error) {
+	fullURL := fmt.Sprintf("http://%v/", c.config.Host)
+
+	body, err := c.generateRequest(method, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	request, err := http.NewRequest("POST", fullURL, bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+	request.SetBasicAuth(c.config.User, c.config.Pass)
+	resp, err := c.httpClient.Do(request)
+	if err != nil {
+		return nil, err
+	}
+
+	dec := json.NewDecoder(resp.Body)
+	var parsedResponse clientResponse
+	err = dec.Decode(&parsedResponse)
+	if err != nil {
+		return nil, err
+	}
+
+	return parsedResponse.Result, nil
+}
+
 func New(config *ConnConfig) (*Client, error) {
+	httpClient := &http.Client{}
+
 	client := Client{
-		config: config,
+		config:     config,
+		httpClient: httpClient,
 	}
 	return &client, nil
 }
