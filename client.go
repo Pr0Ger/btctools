@@ -33,6 +33,8 @@ type Client struct {
 	id uint64
 
 	httpClient *http.Client
+
+	daemonType Forks
 }
 
 func (c *Client) nextID() uint64 {
