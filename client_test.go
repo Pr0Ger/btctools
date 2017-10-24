@@ -1,22 +1,14 @@
 package btctools
 
 import (
+	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
-
-func setupClientTest() *Client {
-	config := ConnConfig{
-		Host: "127.0.0.1:18332",
-		User: "docker",
-		Pass: "docker",
-	}
-	client, _ := New(&config)
-
-	return client
-}
 
 func TestClient_newID(t *testing.T) {
 	client := Client{}
@@ -56,9 +48,21 @@ func TestClient_generateRequest(t *testing.T) {
 	}
 }
 
-//func (suite *ClientTestSuite) TestGetNetworkInfo() {
-//	res, err := suite.client.GetNetworkInfo()
-//
-//	suite.NoError(err)
-//	suite.EqualValues(res.Version, 140100)
-//}
+func TestClient_sendAuthHeader(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		auth := r.Header.Get("Authorization")
+		require.Equal(t, auth, `Basic dGVzdDp0ZXN0`)
+
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintln(w, `{}`)
+	}))
+	defer ts.Close()
+
+	client, _ := New(&ConnConfig{
+		Host: ts.URL[7:],
+		User: "test",
+		Pass: "test",
+	})
+
+	client.sendRequest("ping")
+}

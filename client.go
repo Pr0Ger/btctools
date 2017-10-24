@@ -20,6 +20,11 @@ type ConnConfig struct {
 	Pass string
 }
 
+// Client represents a Bitcoin RPC client which allows easy access to the
+// various RPC methods available on a Bitcoin RPC server.  Each of the wrapper
+// functions handle the details of converting the passed and return types to and
+// from the underlying JSON types which are required for the JSON-RPC
+// invocations
 type Client struct {
 	// config holds the connection configuration associated with this client
 	config *ConnConfig
@@ -37,20 +42,20 @@ func (c *Client) nextID() uint64 {
 type clientRequest struct {
 	Method string        `json:"method"`
 	Params []interface{} `json:"params"`
-	Id     uint64        `json:"id"`
+	ID     uint64        `json:"id"`
 }
 
 func (c *Client) generateRequest(method string, params interface{}) ([]byte, error) {
 	req := clientRequest{
 		Method: method,
-		Id:     c.nextID(),
+		ID:     c.nextID(),
 	}
 
 	rt := reflect.ValueOf(params)
 	switch rt.Kind() {
 	case reflect.Slice:
 		req.Params = make([]interface{}, rt.Len())
-		for i := 0; i < rt.Len(); i += 1 {
+		for i := 0; i < rt.Len(); i++ {
 			req.Params[i] = rt.Index(i).Interface()
 		}
 	default:
@@ -65,7 +70,7 @@ func (c *Client) generateRequest(method string, params interface{}) ([]byte, err
 }
 
 type clientResponse struct {
-	Id     uint64           `json:"id"`
+	ID     uint64           `json:"id"`
 	Result *json.RawMessage `json:"result"`
 	Error  interface{}      `json:"error"`
 }
