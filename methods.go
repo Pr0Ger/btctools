@@ -2,6 +2,7 @@ package btctools
 
 import "encoding/json"
 
+// GetBlockChainInfo provides information about the current state of the block chain.
 func (c *Client) GetBlockChainInfo() (*BlockChainInfo, error) {
 	var resp BlockChainInfo
 
@@ -14,6 +15,7 @@ func (c *Client) GetBlockChainInfo() (*BlockChainInfo, error) {
 	return &resp, err
 }
 
+// GetNetworkInfo returns information about the node’s connection to the network.
 func (c *Client) GetNetworkInfo() (*ClientNetworkInfo, error) {
 	var resp ClientNetworkInfo
 

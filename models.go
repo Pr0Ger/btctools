@@ -38,8 +38,8 @@ type ClientNetworkInfo struct {
 		Name                      string `json:"name"`
 		Limited                   bool   `json:"limited"`
 		Reachable                 bool   `json:"reachable"`
-		Proxy                     string `json:"proxy"`
 		ProxyRandomizeCredentials bool   `json:"proxy_randomize_credentials"`
+		Proxy                     string `json:"proxy"`
 	} `json:"networks"`
 	RelayFee       float64 `json:"relayfee"`
 	LocalAddresses []struct {

@@ -103,6 +103,7 @@ func (c *Client) sendRequest(method string) (*json.RawMessage, error) {
 	return parsedResponse.Result, nil
 }
 
+// New creates a new RPC client based on the provided connection configuration details
 func New(config *ConnConfig) (*Client, error) {
 	httpClient := &http.Client{}
 
