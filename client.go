@@ -77,10 +77,10 @@ type clientResponse struct {
 	Error  interface{}      `json:"error"`
 }
 
-func (c *Client) sendRequest(method string) (*json.RawMessage, error) {
+func (c *Client) sendRequest(method string, params ...interface{}) (*json.RawMessage, error) {
 	fullURL := fmt.Sprintf("http://%v/", c.config.Host)
 
-	body, err := c.generateRequest(method, nil)
+	body, err := c.generateRequest(method, params)
 	if err != nil {
 		return nil, err
 	}

@@ -1,5 +1,7 @@
 package btctools
 
+import "github.com/Pr0Ger/btctools/blockchain"
+
 // BlockChainInfo is a response for `GetBlockChainInfo` RPC call
 type BlockChainInfo struct {
 	Chain                string  `json:"chain"`
@@ -23,6 +25,24 @@ type BlockChainInfo struct {
 		} `json:"reject"`
 	} `json:"softforks"`
 	// bip9_softforks is broken with Dash
+}
+
+// BlockHeader is a response for `GetBlockHeader` RPC call
+type BlockHeader struct {
+	Hash              string               `json:"hash"`
+	Confirmations     int64                `json:"confirmations"`
+	Height            int64                `json:"height"`
+	Version           int64                `json:"version"`
+	VersionHex        string               `json:"versionHex"`
+	MerkleRoot        string               `json:"merkleroot"`
+	Time              uint64               `json:"time"`
+	MedianTime        int64                `json:"mediantime"`
+	Nonce             int64                `json:"nonce"`
+	Bits              string               `json:"bits"`
+	Difficulty        float64              `json:"difficulty"`
+	ChainWork         string               `json:"chainwork"`
+	PreviousBlockHash blockchain.BlockHash `json:"previousblockhash"`
+	NextBlockHash     blockchain.BlockHash `json:"nextblockhash"`
 }
 
 // ClientNetworkInfo is a response for `GetNetworkInfo` RPC call

@@ -6,16 +6,25 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/Pr0Ger/btctools/blockchain"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-func createTestRPCServer(response string) *httptest.Server {
+func testRPCCall(t *testing.T, response string, tester func(client *Client)) {
+	t.Helper()
+
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprintln(w, response)
 	}))
-	return ts
+	defer ts.Close()
+
+	client, _ := New(&ConnConfig{
+		Host: ts.URL[7:],
+	})
+
+	tester(client)
 }
 
 func TestClient_GetBlockChainInfo(t *testing.T) {
@@ -72,17 +81,43 @@ func TestClient_GetBlockChainInfo(t *testing.T) {
     }
 }`
 
-	ts := createTestRPCServer(response)
-	defer ts.Close()
+	testRPCCall(t, response, func(client *Client) {
+		blockChainInfo, err := client.GetBlockChainInfo()
+		require.NoError(t, err)
 
-	client, _ := New(&ConnConfig{
-		Host: ts.URL[7:],
+		assert.EqualValues(t, blockChainInfo.BestBlockHash, "000000000505975c1a91cb553dd896e15f6ae8e110366fd1024efac9fa3bfa30")
 	})
+}
 
-	blockChainInfo, err := client.GetBlockChainInfo()
-	require.NoError(t, err)
+func TestClient_GetBlockHeader(t *testing.T) {
+	response := `{
+    "error": null,
+    "id": 1,
+    "result": {
+        "bits": "1a236480",
+        "chainwork": "00000000000000000000000000000000000000000000002a5d722cf794fa35ac",
+        "confirmations": 8314,
+        "difficulty": 474024.8065780034,
+        "hash": "00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf",
+        "height": 1202774,
+        "mediantime": 1506956494,
+        "merkleroot": "e35f0aa03bb3a187a73ecd166d54c2b21965505d328da1cddd26d4bf4964aabb",
+        "nextblockhash": "000000000000148b91151d83e3b3db9f6d8ce28985ff6ad34ec53e08390a75a9",
+        "nonce": 3807933500,
+        "previousblockhash": "00000000000012c753de0f61e2d6d5af569a0f6ddb0cda5e36edb1e5129a1d0b",
+        "time": 1506960823,
+        "version": 536870912,
+        "versionHex": "20000000"
+    }
+}`
 
-	assert.EqualValues(t, blockChainInfo.BestBlockHash, "000000000505975c1a91cb553dd896e15f6ae8e110366fd1024efac9fa3bfa30")
+	testRPCCall(t, response, func(client *Client) {
+		hash, _ := blockchain.NewHashFromStr("00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf")
+		blockHeader, err := client.GetBlockHeader(hash)
+
+		require.NoError(t, err)
+		require.EqualValues(t, 8314, blockHeader.Confirmations)
+	})
 }
 
 func TestClient_GetNetworkInfo(t *testing.T) {
@@ -128,15 +163,10 @@ func TestClient_GetNetworkInfo(t *testing.T) {
 }
 }`
 
-	ts := createTestRPCServer(response)
-	defer ts.Close()
+	testRPCCall(t, response, func(client *Client) {
+		networkInfo, err := client.GetNetworkInfo()
+		require.NoError(t, err)
 
-	client, _ := New(&ConnConfig{
-		Host: ts.URL[7:],
+		assert.EqualValues(t, networkInfo.Version, 140100)
 	})
-
-	networkInfo, err := client.GetNetworkInfo()
-	require.NoError(t, err)
-
-	assert.EqualValues(t, networkInfo.Version, 140100)
 }
