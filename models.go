@@ -69,3 +69,34 @@ type ClientNetworkInfo struct {
 	} `json:"localaddresses"`
 	Warnings string `json:"warnings"`
 }
+
+type TxCategory string
+
+const (
+	TxCategorySend     = "send"
+	TxCategoryReceive  = "receive"
+	TxCategoryGenerate = "generate"
+	TxCategoryImmature = "immature"
+	TxCategoryOrphan   = "orphan"
+)
+
+// ListSinceBlockResult is a response for `ListSinceBlock` RPC call
+type ListSinceBlockResult struct {
+	Transactions []struct {
+		Address blockchain.AddressPubKeyHash `json:"address,omitempty"`
+		Amount  float64                      `json:"amount"`
+		//bip125-replaceable": "no",
+		Blockhash     blockchain.BlockHash `json:"blockhash,omitempty"`
+		BlockIndex    int64                `json:"blockindex,omitempty"`
+		BlockTime     uint64               `json:"blocktime,omitempty"`
+		Category      TxCategory           `json:"category"`
+		Confirmations uint64               `json:"confirmations"`
+		Label         string               `json:"label"`
+		Time          uint64               `json:"time"`
+		TimeReceived  uint64               `json:"timereceived"`
+		TxID          string               `json:"txid"`
+		Vout          uint32               `json:"vout"`
+		//walletconflicts": []
+	} `json:"transactions"`
+	LastBlock blockchain.BlockHash `json:"lastblock"`
+}

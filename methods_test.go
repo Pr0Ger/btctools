@@ -170,3 +170,40 @@ func TestClient_GetNetworkInfo(t *testing.T) {
 		assert.EqualValues(t, networkInfo.Version, 140100)
 	})
 }
+
+func TestClient_ListSinceBlock(t *testing.T) {
+	response := `{
+    "error": null,
+    "id": 1,
+    "result": {
+        "lastblock": "0000000041aa2d2ceabb358401e072dbc8b8cc463e463a65cfeda6475cd60db4",
+        "transactions": [
+            {
+                "account": "",
+                "address": "mtHeXNNCuSotNyTqYCGvwtBmRp3MY2SyHT",
+                "amount": 3e-05,
+                "bip125-replaceable": "no",
+                "blockhash": "00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf",
+                "blockindex": 29,
+                "blocktime": 1506960823,
+                "category": "receive",
+                "confirmations": 8320,
+                "label": "",
+                "time": 1506960589,
+                "timereceived": 1506960589,
+                "txid": "8319d287855594e6a4e7fa17b9053922aa0b77d4176476ea238d9ef59ca1653c",
+                "vout": 0,
+                "walletconflicts": []
+            }
+        ]
+    }
+}`
+
+	testRPCCall(t, response, func(client *Client) {
+		hash, _ := blockchain.NewHashFromStr("00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf")
+		resp, err := client.ListSinceBlock(hash)
+
+		require.NoError(t, err)
+		require.Len(t, resp.Transactions, 1)
+	})
+}

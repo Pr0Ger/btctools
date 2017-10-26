@@ -24,6 +24,7 @@ func encodeAddress(hash160 []byte, netID byte) string {
 type Address interface {
 	EncodeAddress() string
 	String() string
+	UnmarshalJSON([]byte) error
 }
 
 type AddressPubKeyHash struct {
@@ -38,6 +39,25 @@ func (a *AddressPubKeyHash) EncodeAddress() string {
 // String returns human-readable string for using with fmt.Stringer
 func (a *AddressPubKeyHash) String() string {
 	return a.EncodeAddress()
+}
+
+func (a *AddressPubKeyHash) UnmarshalJSON(src []byte) error {
+	src = src[1 : len(src)-1]
+
+	decoded, netID, err := base58.CheckDecode(string(src))
+	if err != nil {
+		if err == base58.ErrChecksum {
+			return ErrChecksumMismatch
+		}
+		return errors.New("decoded address is of unknown format")
+	}
+	if len(decoded) != ripemd160.Size {
+		return errors.New("decoded address is of unknown size")
+	}
+	a.netID = netID
+	copy(a.hash[:], decoded)
+
+	return nil
 }
 
 // DecodeAddress will attempt to recognize and parse address from string

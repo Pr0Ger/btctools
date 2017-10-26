@@ -44,3 +44,15 @@ func (c *Client) GetNetworkInfo() (*ClientNetworkInfo, error) {
 	err = json.Unmarshal(*rawResp, &resp)
 	return &resp, err
 }
+
+func (c *Client) ListSinceBlock(hash *blockchain.BlockHash) (*ListSinceBlockResult, error) {
+	var resp ListSinceBlockResult
+
+	rawResp, err := c.sendRequest("listsinceblock", hash.String())
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(*rawResp, &resp)
+	return &resp, err
+}

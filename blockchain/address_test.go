@@ -6,7 +6,17 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestNewAddressPubKeyHash(t *testing.T) {
+func TestAddressPubKeyHash_UnmarshalJSON(t *testing.T) {
+	in := `"17VZNX1SN5NtKa8UQFxwQbFeFc3iqRYhem"`
+
+	addr := new(AddressPubKeyHash)
+	err := addr.UnmarshalJSON([]byte(in))
+
+	require.NoError(t, err)
+	require.Equal(t, "17VZNX1SN5NtKa8UQFxwQbFeFc3iqRYhem", addr.String())
+}
+
+func TestDecodeAddress(t *testing.T) {
 	tests := []struct {
 		address string
 	}{
