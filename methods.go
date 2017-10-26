@@ -45,6 +45,21 @@ func (c *Client) GetNetworkInfo() (*ClientNetworkInfo, error) {
 	return &resp, err
 }
 
+func (c *Client) GetNewAddress(account string) (blockchain.Address, error) {
+	var resp string
+
+	rawResp, err := c.sendRequest("getnewaddress")
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(*rawResp, &resp)
+	if err != nil {
+		return nil, err
+	}
+	return blockchain.DecodeAddress(resp)
+}
+
 func (c *Client) ListSinceBlock(hash *blockchain.BlockHash) (*ListSinceBlockResult, error) {
 	var resp ListSinceBlockResult
 

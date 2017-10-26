@@ -171,6 +171,20 @@ func TestClient_GetNetworkInfo(t *testing.T) {
 	})
 }
 
+func TestClient_GetNewAddress(t *testing.T) {
+	response := `{
+    "error": null,
+    "id": 1,
+    "result": "mwkpPfgSFj4fq2Xm96tUUGVPSAwhzWrXva"
+}`
+	testRPCCall(t, response, func(client *Client) {
+		resp, err := client.GetNewAddress("")
+
+		require.NoError(t, err)
+		require.Equal(t, "mwkpPfgSFj4fq2Xm96tUUGVPSAwhzWrXva", resp.String())
+	})
+}
+
 func TestClient_ListSinceBlock(t *testing.T) {
 	response := `{
     "error": null,
