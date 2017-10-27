@@ -1,0 +1,21 @@
+{
+  "Enable": [
+    "vet",
+    "vetshadow",
+    "deadcode",
+    "gocyclo",
+    "golint",
+    "structcheck",
+    "maligned",
+    "errcheck",
+    "interfacer",
+    "unconvert",
+    "goconst",
+    "gas"
+  ],
+  "Vendor": true,
+  "Sort": [
+    "severity"
+  ],
+  "WarnUnmatchedDirective": true
+}
