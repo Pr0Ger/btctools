@@ -263,9 +263,9 @@ func TestClient_SendToAddress(t *testing.T) {
 	}, func(client *Client) {
 		addr, _ := blockchain.DecodeAddress("mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6")
 
-		txId, err := client.SendToAddress(addr, 1, "", "", true)
+		txID, err := client.SendToAddress(addr, 1, "", "", true)
 
 		require.NoError(t, err)
-		assert.Equal(t, "a2a2eb18cb051b5fe896a32b1cb20b179d981554b6bd7c5a956e56a0eecb04f0", txId)
+		assert.Equal(t, "a2a2eb18cb051b5fe896a32b1cb20b179d981554b6bd7c5a956e56a0eecb04f0", txID)
 	})
 }

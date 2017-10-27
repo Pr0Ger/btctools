@@ -11,14 +11,16 @@ const HashSize = 32
 // MaxHashStringSize is the maximum length of a Hash hash string.
 const MaxHashStringSize = HashSize * 2
 
+// BlockHash is used for storing hash of block
 type BlockHash [HashSize]byte
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (hash *BlockHash) UnmarshalJSON(src []byte) error {
 	if len(src) > MaxHashStringSize+2 {
 		return fmt.Errorf("max hash string length is %v bytes", MaxHashStringSize)
 	}
 
-	src = src[1:len(src)-1]
+	src = src[1 : len(src)-1]
 
 	var reversedHash BlockHash
 	_, err := hex.Decode(reversedHash[HashSize-hex.DecodedLen(len(src)):], src)

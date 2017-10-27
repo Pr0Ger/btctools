@@ -70,6 +70,7 @@ type ClientNetworkInfo struct {
 	Warnings string `json:"warnings"`
 }
 
+// TxCategory represents type of transaction
 type TxCategory string
 
 const (

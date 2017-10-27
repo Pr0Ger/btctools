@@ -41,6 +41,7 @@ func (a *AddressPubKeyHash) String() string {
 	return a.EncodeAddress()
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (a *AddressPubKeyHash) UnmarshalJSON(src []byte) error {
 	src = src[1 : len(src)-1]
 
