@@ -34,5 +34,9 @@ func (c *Client) GetType() (Forks, error) {
 		c.daemonType = ForkOriginal
 	}
 
+	if strings.Contains(info.Subversion, "LitecoinCore") {
+		c.daemonType = ForkLitecoin
+	}
+
 	return c.daemonType, nil
 }

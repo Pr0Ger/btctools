@@ -13,3 +13,11 @@ var BitcoinMainChain = Chain{
 var BitcoinTestChain = Chain{
 	PubKeyHashAddrID: 0x6f,
 }
+
+var LitecoinMainChain = Chain{
+	PubKeyHashAddrID: 0x30,
+}
+
+var LitecoinTestChain = Chain{
+	PubKeyHashAddrID: 0x6f,
+}
