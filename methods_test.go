@@ -1,7 +1,9 @@
 package btctools
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -11,10 +13,18 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func testRPCCall(t *testing.T, response string, tester func(client *Client)) {
+type parsedRequest map[string]interface{}
+
+func testRPCCall(t *testing.T, response string, validator func(*parsedRequest), tester func(*Client)) {
 	t.Helper()
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		body, _ := ioutil.ReadAll(r.Body)
+		request := new(parsedRequest)
+		require.NoError(t, json.Unmarshal(body, &request))
+
+		validator(request)
+
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprintln(w, response)
 	}))
@@ -81,7 +91,9 @@ func TestClient_GetBlockChainInfo(t *testing.T) {
     }
 }`
 
-	testRPCCall(t, response, func(client *Client) {
+	testRPCCall(t, response, func(request *parsedRequest) {
+		assert.Equal(t, "getblockchaininfo", (*request)["method"])
+	}, func(client *Client) {
 		blockChainInfo, err := client.GetBlockChainInfo()
 		require.NoError(t, err)
 
@@ -111,12 +123,16 @@ func TestClient_GetBlockHeader(t *testing.T) {
     }
 }`
 
-	testRPCCall(t, response, func(client *Client) {
+	testRPCCall(t, response, func(request *parsedRequest) {
+		assert.Equal(t, "getblockheader", (*request)["method"])
+		assert.Len(t, (*request)["params"], 1)
+		assert.Equal(t, "00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf", (*request)["params"].([]interface{})[0])
+	}, func(client *Client) {
 		hash, _ := blockchain.NewHashFromStr("00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf")
 		blockHeader, err := client.GetBlockHeader(hash)
 
 		require.NoError(t, err)
-		require.EqualValues(t, 8314, blockHeader.Confirmations)
+		assert.EqualValues(t, 8314, blockHeader.Confirmations)
 	})
 }
 
@@ -163,7 +179,9 @@ func TestClient_GetNetworkInfo(t *testing.T) {
 }
 }`
 
-	testRPCCall(t, response, func(client *Client) {
+	testRPCCall(t, response, func(request *parsedRequest) {
+		assert.Equal(t, "getnetworkinfo", (*request)["method"])
+	}, func(client *Client) {
 		networkInfo, err := client.GetNetworkInfo()
 		require.NoError(t, err)
 
@@ -177,11 +195,13 @@ func TestClient_GetNewAddress(t *testing.T) {
     "id": 1,
     "result": "mwkpPfgSFj4fq2Xm96tUUGVPSAwhzWrXva"
 }`
-	testRPCCall(t, response, func(client *Client) {
+	testRPCCall(t, response, func(request *parsedRequest) {
+		assert.Equal(t, "getnewaddress", (*request)["method"])
+	}, func(client *Client) {
 		resp, err := client.GetNewAddress("")
 
 		require.NoError(t, err)
-		require.Equal(t, "mwkpPfgSFj4fq2Xm96tUUGVPSAwhzWrXva", resp.String())
+		assert.Equal(t, "mwkpPfgSFj4fq2Xm96tUUGVPSAwhzWrXva", resp.String())
 	})
 }
 
@@ -213,11 +233,39 @@ func TestClient_ListSinceBlock(t *testing.T) {
     }
 }`
 
-	testRPCCall(t, response, func(client *Client) {
+	testRPCCall(t, response, func(request *parsedRequest) {
+		assert.Equal(t, "listsinceblock", (*request)["method"])
+		assert.Len(t, (*request)["params"], 1)
+		assert.Equal(t, "00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf", (*request)["params"].([]interface{})[0])
+	}, func(client *Client) {
 		hash, _ := blockchain.NewHashFromStr("00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf")
 		resp, err := client.ListSinceBlock(hash)
 
 		require.NoError(t, err)
-		require.Len(t, resp.Transactions, 1)
+		assert.Len(t, resp.Transactions, 1)
+	})
+}
+
+func TestClient_SendToAddress(t *testing.T) {
+	response := `{
+    "error": null,
+    "id": 1,
+    "result": "a2a2eb18cb051b5fe896a32b1cb20b179d981554b6bd7c5a956e56a0eecb04f0"
+}`
+	testRPCCall(t, response, func(request *parsedRequest) {
+		assert.Equal(t, "sendtoaddress", (*request)["method"])
+		assert.Len(t, (*request)["params"], 5)
+		assert.Equal(t, "mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6", (*request)["params"].([]interface{})[0])
+		assert.Equal(t, 1.0, (*request)["params"].([]interface{})[1])
+		assert.Equal(t, "", (*request)["params"].([]interface{})[2])
+		assert.Equal(t, "", (*request)["params"].([]interface{})[3])
+		assert.Equal(t, true, (*request)["params"].([]interface{})[4])
+	}, func(client *Client) {
+		addr, _ := blockchain.DecodeAddress("mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6")
+
+		txId, err := client.SendToAddress(addr, 1, "", "", true)
+
+		require.NoError(t, err)
+		assert.Equal(t, "a2a2eb18cb051b5fe896a32b1cb20b179d981554b6bd7c5a956e56a0eecb04f0", txId)
 	})
 }

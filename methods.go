@@ -34,7 +34,7 @@ func (c *Client) GetBlockHeader(hash *blockchain.BlockHash) (*BlockHeader, error
 	return &resp, err
 }
 
-// GetNetworkInfo returns information about the node’s connection to the network.
+// GetNetworkInfo returns information about the node’s connection to the network
 func (c *Client) GetNetworkInfo() (*ClientNetworkInfo, error) {
 	var resp ClientNetworkInfo
 
@@ -55,11 +55,20 @@ func (c *Client) GetNewAddress(account string) (blockchain.Address, error) {
 }
 
 // ListSinceBlock gets all transactions affecting the wallet which have occurred since a particular block,
-// plus the header hash of a block at a particular depth.
+// plus the header hash of a block at a particular depth
 func (c *Client) ListSinceBlock(hash *blockchain.BlockHash) (*ListSinceBlockResult, error) {
 	var resp ListSinceBlockResult
 
-	err := c.getRPCResponse("listsinceblock", &resp)
+	err := c.getRPCResponse("listsinceblock", &resp, hash.String())
 
 	return &resp, err
+}
+
+// SendToAddress spends an amount to a given address
+func (c *Client) SendToAddress(to blockchain.Address, amount float64, comment string, commentTo string, subtractFeeFromAmount bool) (string, error) {
+	var resp string
+
+	err := c.getRPCResponse("sendtoaddress", &resp, to.String(), amount, comment, commentTo, subtractFeeFromAmount)
+
+	return resp, err
 }
