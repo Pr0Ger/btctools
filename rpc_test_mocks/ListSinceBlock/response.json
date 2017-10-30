@@ -27,6 +27,36 @@
       }
     }
   ],
+  "dash": [
+    {
+      "error": null,
+      "id": 1,
+      "result": {
+        "transactions": [
+          {
+            "account": "",
+            "address": "ydguuND5oP33XnRLuq48cMEer6LgKio1HT",
+            "category": "receive",
+            "amount": 1000.00000000,
+            "label": "",
+            "vout": 1,
+            "confirmations": 10,
+            "instantlock": false,
+            "blockhash": "00000000c825650587fc4fc06bffd1e55d09514e4c3263ba7c24b56c7d53aeab",
+            "blockindex": 1,
+            "blocktime": 1509381208,
+            "txid": "8c7dce922263f3fd276564ece64afe0ea1946c68173c55534349a9ef3e74c211",
+            "walletconflicts": [
+            ],
+            "time": 1509381208,
+            "timereceived": 1509381773,
+            "bip125-replaceable": "no"
+          }
+        ],
+        "lastblock": "0000000054cc7de0b6e1256f017803f490d0cbe3efbcf8c1c592e8d3bed899b1"
+      }
+    }
+  ],
   "litecoin": [
     {
       "error": null,

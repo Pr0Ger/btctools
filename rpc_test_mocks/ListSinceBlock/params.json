@@ -5,6 +5,12 @@
       "confirmations": 8608
     }
   ],
+  "dash": [
+    {
+      "block": "000000010719c0f8448fb480ff1aedca3d4a3d95ff16ccb8c4873c70ac00bb66",
+      "confirmations": 10
+    }
+  ],
   "litecoin": [
     {
       "block": "68e86ab8f55d73c083643783d386afc2a8ea525726eb683650ba683cbb44a291",

@@ -38,5 +38,9 @@ func (c *Client) GetType() (Forks, error) {
 		c.daemonType = ForkLitecoin
 	}
 
+	if strings.Contains(info.Subversion, "Dash Core") {
+		c.daemonType = ForkDash
+	}
+
 	return c.daemonType, nil
 }

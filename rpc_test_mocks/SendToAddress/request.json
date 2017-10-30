@@ -5,6 +5,16 @@
       "params": ["mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6", 1.0, "", "", true]
     }
   ],
+  "dash": [
+    {
+      "method": "sendtoaddress",
+      "params": ["ydguuND5oP33XnRLuq48cMEer6LgKio1HT", 1.0, "", "", true]
+    },
+    {
+      "method": "sendtoaddress",
+      "params": ["ydguuND5oP33XnRLuq48cMEer6LgKio1HT", 1.0, "", "", true, true]
+    }
+  ],
   "litecoin": [
     {
       "method": "sendtoaddress",

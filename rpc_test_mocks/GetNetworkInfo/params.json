@@ -4,6 +4,11 @@
       "networkVersion": 140100
     }
   ],
+  "dash": [
+    {
+      "networkVersion": 120105
+    }
+  ],
   "litecoin": [
     {
       "networkVersion": 140200

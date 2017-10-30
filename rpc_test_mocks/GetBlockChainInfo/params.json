@@ -4,6 +4,11 @@
       "bestblockhash": "000000000505975c1a91cb553dd896e15f6ae8e110366fd1024efac9fa3bfa30"
     }
   ],
+  "dash": [
+    {
+      "bestblockhash": "00000000040d4b4a87bf0fefe222d053fe9eb3311c08dbdefe0c57cb3c1b2f74"
+    }
+  ],
   "litecoin": [
     {
       "bestblockhash": "05e573bd49e14c41a4d7eedfdd5f5268a27443c3237750eb479ecd3a1c12da9b"
