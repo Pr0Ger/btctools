@@ -1,0 +1,110 @@
+{
+  "bitcoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": {
+        "bestblockhash": "000000000505975c1a91cb553dd896e15f6ae8e110366fd1024efac9fa3bfa30",
+        "bip9_softforks": {
+          "csv": {
+            "since": 770112,
+            "startTime": 1456790400,
+            "status": "active",
+            "timeout": 1493596800
+          },
+          "segwit": {
+            "since": 834624,
+            "startTime": 1462060800,
+            "status": "active",
+            "timeout": 1493596800
+          }
+        },
+        "blocks": 1210950,
+        "chain": "test",
+        "chainwork": "0000000000000000000000000000000000000000000000318e744f1a22f5d028",
+        "difficulty": 1,
+        "headers": 1210950,
+        "mediantime": 1508846329,
+        "pruned": false,
+        "softforks": [
+          {
+            "id": "bip34",
+            "reject": {
+              "status": true
+            },
+            "version": 2
+          },
+          {
+            "id": "bip66",
+            "reject": {
+              "status": true
+            },
+            "version": 3
+          },
+          {
+            "id": "bip65",
+            "reject": {
+              "status": true
+            },
+            "version": 4
+          }
+        ],
+        "verificationprogress": 0.9999955420699167
+      }
+    }
+  ],
+  "litecoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": {
+        "bestblockhash": "05e573bd49e14c41a4d7eedfdd5f5268a27443c3237750eb479ecd3a1c12da9b",
+        "bip9_softforks": {
+          "csv": {
+            "since": 6048,
+            "startTime": 1483228800,
+            "status": "active",
+            "timeout": 1517356801
+          },
+          "segwit": {
+            "since": 6048,
+            "startTime": 1483228800,
+            "status": "active",
+            "timeout": 1517356801
+          }
+        },
+        "blocks": 248434,
+        "chain": "test",
+        "chainwork": "00000000000000000000000000000000000000000000000000026b87a7d4983c",
+        "difficulty": 0.0002441371325370145,
+        "headers": 248434,
+        "mediantime": 1509369027,
+        "pruned": false,
+        "softforks": [
+          {
+            "id": "bip34",
+            "reject": {
+              "status": true
+            },
+            "version": 2
+          },
+          {
+            "id": "bip66",
+            "reject": {
+              "status": true
+            },
+            "version": 3
+          },
+          {
+            "id": "bip65",
+            "reject": {
+              "status": true
+            },
+            "version": 4
+          }
+        ],
+        "verificationprogress": 0.9999963620164513
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "bitcoin": [
+    {
+      "networkVersion": 140100
+    }
+  ],
+  "litecoin": [
+    {
+      "networkVersion": 140200
+    }
+  ]
+}

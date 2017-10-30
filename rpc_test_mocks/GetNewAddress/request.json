@@ -1,0 +1,10 @@
+{
+  "all": [
+    {
+      "method": "getnewaddress",
+      "params": [
+        ""
+      ]
+    }
+  ]
+}

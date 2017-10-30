@@ -1,0 +1,58 @@
+{
+  "bitcoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": {
+        "lastblock": "0000000041aa2d2ceabb358401e072dbc8b8cc463e463a65cfeda6475cd60db4",
+        "transactions": [
+          {
+            "account": "",
+            "address": "mtHeXNNCuSotNyTqYCGvwtBmRp3MY2SyHT",
+            "amount": 3e-05,
+            "bip125-replaceable": "no",
+            "blockhash": "00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf",
+            "blockindex": 29,
+            "blocktime": 1506960823,
+            "category": "receive",
+            "confirmations": 8320,
+            "label": "",
+            "time": 1506960589,
+            "timereceived": 1506960589,
+            "txid": "8319d287855594e6a4e7fa17b9053922aa0b77d4176476ea238d9ef59ca1653c",
+            "vout": 0,
+            "walletconflicts": []
+          }
+        ]
+      }
+    }
+  ],
+  "litecoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": {
+        "lastblock": "8b38c124129171585f12d3acd895ad5df4d95e4783daf88e07ac38f148fd4c60",
+        "transactions": [
+          {
+            "account": "",
+            "address": "QNNqsVnPT7bfFuzvvvn9m2DiDuyRtoZa5K",
+            "amount": 3e-05,
+            "bip125-replaceable": "no",
+            "blockhash": "e66ee6a369f7842f3cf23e3d070d448058fda8892a1eff17e7e9faf34ecff5c7",
+            "blockindex": 1,
+            "blocktime": 1509115267,
+            "category": "receive",
+            "confirmations": 8320,
+            "label": "",
+            "time": 1509115267,
+            "timereceived": 1509376927,
+            "txid": "83caa0838133fa6ee063f95a58f8244a56292ebbed532ec60937c0504582b2e5",
+            "vout": 0,
+            "walletconflicts": []
+          }
+        ]
+      }
+    }
+  ]
+}

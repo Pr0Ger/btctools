@@ -1,0 +1,14 @@
+{
+  "bitcoin": [
+    {
+      "addr": "mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6",
+      "tx": "a2a2eb18cb051b5fe896a32b1cb20b179d981554b6bd7c5a956e56a0eecb04f0"
+    }
+  ],
+  "litecoin": [
+    {
+      "addr": "QNNqsVnPT7bfFuzvvvn9m2DiDuyRtoZa5K",
+      "tx": "83caa0838133fa6ee063f95a58f8244a56292ebbed532ec60937c0504582b2e5"
+    }
+  ]
+}

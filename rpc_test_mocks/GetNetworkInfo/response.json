@@ -1,0 +1,88 @@
+{
+  "bitcoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": {
+        "connections": 8,
+        "incrementalfee": 1e-05,
+        "localaddresses": [],
+        "localrelay": true,
+        "localservices": "000000000000000d",
+        "networkactive": true,
+        "networks": [
+          {
+            "limited": false,
+            "name": "ipv4",
+            "proxy": "",
+            "proxy_randomize_credentials": false,
+            "reachable": true
+          },
+          {
+            "limited": false,
+            "name": "ipv6",
+            "proxy": "",
+            "proxy_randomize_credentials": false,
+            "reachable": true
+          },
+          {
+            "limited": true,
+            "name": "onion",
+            "proxy": "",
+            "proxy_randomize_credentials": false,
+            "reachable": false
+          }
+        ],
+        "protocolversion": 70015,
+        "relayfee": 1e-05,
+        "subversion": "/Satoshi:0.14.1/",
+        "timeoffset": -1,
+        "version": 140100,
+        "warnings": "Warning: unknown new rules activated (versionbit 28)"
+      }
+    }
+  ],
+  "litecoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": {
+        "connections": 8,
+        "incrementalfee": 1e-05,
+        "localaddresses": [],
+        "localrelay": true,
+        "localservices": "000000000000000d",
+        "networkactive": true,
+        "networks": [
+          {
+            "limited": false,
+            "name": "ipv4",
+            "proxy": "",
+            "proxy_randomize_credentials": false,
+            "reachable": true
+          },
+          {
+            "limited": false,
+            "name": "ipv6",
+            "proxy": "",
+            "proxy_randomize_credentials": false,
+            "reachable": true
+          },
+          {
+            "limited": true,
+            "name": "onion",
+            "proxy": "",
+            "proxy_randomize_credentials": false,
+            "reachable": false
+          }
+        ],
+        "protocolversion": 70015,
+        "relayfee": 0.001,
+        "subversion": "/LitecoinCore:0.14.2/",
+        "timeoffset": 0,
+        "version": 140200,
+        "warnings": ""
+      }
+    }
+  ]
+}

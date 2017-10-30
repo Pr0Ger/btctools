@@ -1,0 +1,46 @@
+{
+  "bitcoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": {
+        "bits": "1a236480",
+        "chainwork": "00000000000000000000000000000000000000000000002a5d722cf794fa35ac",
+        "confirmations": 8608,
+        "difficulty": 474024.8065780034,
+        "hash": "00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf",
+        "height": 1202774,
+        "mediantime": 1506956494,
+        "merkleroot": "e35f0aa03bb3a187a73ecd166d54c2b21965505d328da1cddd26d4bf4964aabb",
+        "nextblockhash": "000000000000148b91151d83e3b3db9f6d8ce28985ff6ad34ec53e08390a75a9",
+        "nonce": 3807933500,
+        "previousblockhash": "00000000000012c753de0f61e2d6d5af569a0f6ddb0cda5e36edb1e5129a1d0b",
+        "time": 1506960823,
+        "version": 536870912,
+        "versionHex": "20000000"
+      }
+    }
+  ],
+  "litecoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": {
+        "bits": "1e0fffff",
+        "chainwork": "00000000000000000000000000000000000000000000000000026b87a7e4983d",
+        "confirmations": 2,
+        "difficulty": 0.0002441371325370145,
+        "hash": "68e86ab8f55d73c083643783d386afc2a8ea525726eb683650ba683cbb44a291",
+        "height": 248435,
+        "mediantime": 1509369330,
+        "merkleroot": "61b64c21cfeb92d96ee9f180cacf82fafb272cd6d30c2e580d5fb2ed905ad818",
+        "nextblockhash": "654f2ef420bbe7d9d63b5851ebefbc0b7a5be8b1a2c20ee340351c84a4397b8c",
+        "nonce": 3218210816,
+        "previousblockhash": "05e573bd49e14c41a4d7eedfdd5f5268a27443c3237750eb479ecd3a1c12da9b",
+        "time": 1509370979,
+        "version": 536870912,
+        "versionHex": "20000000"
+      }
+    }
+  ]
+}

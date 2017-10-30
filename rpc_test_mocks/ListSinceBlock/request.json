@@ -1,0 +1,14 @@
+{
+  "bitcoin": [
+    {
+      "method": "listsinceblock",
+      "params": ["00000000000021420990192c4e6143f51f024a6ae9b0312bb11119462fcbdebf"]
+    }
+  ],
+  "litecoin": [
+    {
+      "method": "listsinceblock",
+      "params": ["68e86ab8f55d73c083643783d386afc2a8ea525726eb683650ba683cbb44a291"]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "bitcoin": [
+    {
+      "method": "sendtoaddress",
+      "params": ["mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6", 1.0, "", "", true]
+    }
+  ],
+  "litecoin": [
+    {
+      "method": "sendtoaddress",
+      "params": ["QNNqsVnPT7bfFuzvvvn9m2DiDuyRtoZa5K", 1.0, "", "", true]
+    }
+  ]
+}

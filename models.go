@@ -14,7 +14,7 @@ type BlockChainInfo struct {
 	ChainWork            string  `json:"chainwork"`
 	Pruned               bool    `json:"pruned"`
 	PruneHeight          int64   `json:"pruneheight,omitempty"`
-	Softforks            []struct {
+	SoftForks            []struct {
 		ID      string `json:"id"`
 		Version int    `json:"version"`
 		Reject  struct {

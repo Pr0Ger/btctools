@@ -1,0 +1,16 @@
+{
+  "bitcoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": "mwkpPfgSFj4fq2Xm96tUUGVPSAwhzWrXva"
+    }
+  ],
+  "litecoin": [
+    {
+      "error": null,
+      "id": 1,
+      "result": "mxx1kxRpc6zHaWcitvn5VbC8tqdgv1ZtEt"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "bitcoin": [
+    {
+      "bestblockhash": "000000000505975c1a91cb553dd896e15f6ae8e110366fd1024efac9fa3bfa30"
+    }
+  ],
+  "litecoin": [
+    {
+      "bestblockhash": "05e573bd49e14c41a4d7eedfdd5f5268a27443c3237750eb479ecd3a1c12da9b"
+    }
+  ]
+}
