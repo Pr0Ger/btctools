@@ -87,7 +87,7 @@ type ListSinceBlockResult struct {
 		Address blockchain.AddressPubKeyHash `json:"address,omitempty"`
 		Amount  float64                      `json:"amount"`
 		//bip125-replaceable": "no",
-		Blockhash     blockchain.BlockHash `json:"blockhash,omitempty"`
+		BlockHash     blockchain.BlockHash `json:"blockhash,omitempty"`
 		BlockIndex    int64                `json:"blockindex,omitempty"`
 		BlockTime     uint64               `json:"blocktime,omitempty"`
 		Category      TxCategory           `json:"category"`
