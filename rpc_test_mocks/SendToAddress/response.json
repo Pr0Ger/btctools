@@ -4,6 +4,14 @@
       "error": null,
       "id": 1,
       "result": "a2a2eb18cb051b5fe896a32b1cb20b179d981554b6bd7c5a956e56a0eecb04f0"
+    },
+    {
+      "result": null,
+      "error": {
+        "code": -6,
+        "message": "Insufficient funds"
+      },
+      "id": 1
     }
   ],
   "dash": [

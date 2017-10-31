@@ -61,38 +61,63 @@ func testMethod(t *testing.T, method string, validator func(*testing.T, *parsedJ
 	}
 
 	if len(currencies) == 0 {
-		testMethodForCurrency(t, getDataForCurrency(requests, "all"), getDataForCurrency(responses, "all"),
+		testMethodForCases(t, getDataForCurrency(requests, "all"), getDataForCurrency(responses, "all"),
 			getDataForCurrency(params, "all"), validator, tester)
 	} else {
 		for _, currency := range currencies {
 			t.Run(currency, func(t *testing.T) {
-				testMethodForCurrency(t, getDataForCurrency(requests, currency), getDataForCurrency(responses, currency),
+				testMethodForCases(t, getDataForCurrency(requests, currency), getDataForCurrency(responses, currency),
 					getDataForCurrency(params, currency), validator, tester)
 			})
 		}
 	}
 }
 
-func testMethodForCurrency(t *testing.T, requests []parsedJSON, responses []parsedJSON, params []parsedJSON,
+func testMethodForCases(t *testing.T, requests []parsedJSON, responses []parsedJSON, params []parsedJSON,
+	validator func(*testing.T, *parsedJSON), tester func(*testing.T, *Client, *parsedJSON)) {
+	t.Helper()
+
+	if len(responses) > 1 {
+		for i, response := range responses {
+			var request, param parsedJSON
+			if i < len(requests) {
+				request = requests[i]
+			} else {
+				request = requests[0]
+			}
+			if i < len(params) {
+				param = params[i]
+			} else {
+				param = params[0]
+			}
+
+			t.Run(fmt.Sprintf("%v", i), func(t *testing.T) {
+				testMethodForCase(t, request, response, param, validator, tester)
+			})
+		}
+	} else {
+		testMethodForCase(t, requests[0], responses[0], params[0], validator, tester)
+	}
+}
+
+func testMethodForCase(t *testing.T, request parsedJSON, response parsedJSON, params parsedJSON,
 	validator func(*testing.T, *parsedJSON), tester func(*testing.T, *Client, *parsedJSON)) {
 	t.Helper()
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		body, _ := ioutil.ReadAll(r.Body)
-		request := new(parsedJSON)
-		require.NoError(t, json.Unmarshal(body, &request))
+		realRequest := new(parsedJSON)
+		require.NoError(t, json.Unmarshal(body, &realRequest))
 
-		expectedRequest := requests[0]
-
-		for key, value := range expectedRequest {
-			require.Equal(t, value, (*request)[key])
+		for key, value := range request {
+			require.Equal(t, value, (*realRequest)[key])
 		}
 
-		validator(t, request)
+		validator(t, realRequest)
 
 		w.Header().Set("Content-Type", "application/json")
 
-		data, err := json.Marshal(responses[0])
+		data, err := json.Marshal(response)
 		require.NoError(t, err)
 		w.Write(data)
 	}))
@@ -102,7 +127,7 @@ func testMethodForCurrency(t *testing.T, requests []parsedJSON, responses []pars
 		Host: ts.URL[7:],
 	})
 
-	tester(t, client, &params[0])
+	tester(t, client, &params)
 }
 
 func loadResource(method string, resType string) (*parsedJSON, error) {
@@ -171,9 +196,15 @@ func TestClient_SendToAddress(t *testing.T) {
 	testMethod(t, "SendToAddress", emptyValidator, func(t *testing.T, client *Client, params *parsedJSON) {
 		addr, _ := blockchain.DecodeAddress((*params)["addr"].(string))
 
-		txID, err := client.SendToAddress(addr, 1, "", "", true)
+		amount := (*params)["amount"].(float64)
+		txID, err := client.SendToAddress(addr, amount, "", "", true)
 
-		require.NoError(t, err)
-		assert.Equal(t, (*params)["tx"].(string), txID)
+		errText, expectErr := (*params)["error"].(string)
+		if expectErr {
+			require.Error(t, err, errText)
+		} else {
+			require.NoError(t, err)
+			assert.Equal(t, (*params)["tx"].(string), txID)
+		}
 	})
 }

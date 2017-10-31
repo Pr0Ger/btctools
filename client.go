@@ -102,6 +102,16 @@ func (c *Client) sendRequest(method string, params ...interface{}) (*json.RawMes
 		return nil, err
 	}
 
+	if parsedResponse.Error != nil {
+		switch err := parsedResponse.Error.(type) {
+		case map[string]interface{}:
+			msg, ok := err["message"]
+			if ok {
+				return nil, fmt.Errorf("%v", msg)
+			}
+		}
+		return nil, fmt.Errorf("%v", parsedResponse.Error)
+	}
 	return parsedResponse.Result, nil
 }
 

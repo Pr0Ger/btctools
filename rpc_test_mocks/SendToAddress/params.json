@@ -2,18 +2,26 @@
   "bitcoin": [
     {
       "addr": "mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6",
+      "amount": 1.0,
       "tx": "a2a2eb18cb051b5fe896a32b1cb20b179d981554b6bd7c5a956e56a0eecb04f0"
+    },
+    {
+      "addr": "mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6",
+      "amount": 100.0,
+      "error": "Insufficient funds"
     }
   ],
   "dash": [
     {
       "addr": "ydguuND5oP33XnRLuq48cMEer6LgKio1HT",
+      "amount": 1.0,
       "tx": "8c7dce922263f3fd276564ece64afe0ea1946c68173c55534349a9ef3e74c211"
     }
   ],
   "litecoin": [
     {
       "addr": "QNNqsVnPT7bfFuzvvvn9m2DiDuyRtoZa5K",
+      "amount": 1.0,
       "tx": "83caa0838133fa6ee063f95a58f8244a56292ebbed532ec60937c0504582b2e5"
     }
   ]

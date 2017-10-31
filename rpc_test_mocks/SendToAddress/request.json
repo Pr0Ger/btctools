@@ -3,6 +3,10 @@
     {
       "method": "sendtoaddress",
       "params": ["mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6", 1.0, "", "", true]
+    },
+    {
+      "method": "sendtoaddress",
+      "params": ["mmXgiR6KAhZCyQ8ndr2BCfEq1wNG2UnyG6", 100.0, "", "", true]
     }
   ],
   "dash": [
