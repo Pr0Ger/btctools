@@ -89,6 +89,7 @@ func (c *Client) sendRequest(method string, params ...interface{}) (*json.RawMes
 	if err != nil {
 		return nil, err
 	}
+	request.Close = true
 	request.SetBasicAuth(c.config.User, c.config.Pass)
 	resp, err := c.httpClient.Do(request)
 	if err != nil {
@@ -98,6 +99,7 @@ func (c *Client) sendRequest(method string, params ...interface{}) (*json.RawMes
 	dec := json.NewDecoder(resp.Body)
 	var parsedResponse clientResponse
 	err = dec.Decode(&parsedResponse)
+	resp.Body.Close()
 	if err != nil {
 		return nil, err
 	}
